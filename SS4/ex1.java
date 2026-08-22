@@ -27,7 +27,7 @@ public class  ex1{
             arr[i] = arr[maxIndex];
             arr[maxIndex] = temp;
         }
-//        hiển thị mảng sau sắp xếp + phần tử lớn nhất5
+//        hiển thị mảng sau sắp xếp + phần tử lớn nhất
         System.out.print("Mảng sau khi sắp xếp theo thứ tự giảm dần: [");
         for (int i = 0; i < n; i++) {
             System.out.print(arr[i]);
