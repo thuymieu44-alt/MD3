@@ -1,79 +1,67 @@
-interface Colorable {
-    void setColor(String color);
+interface IBank {
+    void deposit(double amount);
+    void withdraw(double amount);
 }
 
-// ---------------------- Circle ----------------------
-class Circle implements Colorable {
-    private double radius;
-    private String color;
+// ---------------------- BankAccount ----------------------
+class BankAccount implements IBank {
+    private String accountId;
+    private double balance;
+    private String userName;
+    private String phoneNumber;
 
-    public Circle(double radius) {
-        this.radius = radius;
+    public BankAccount(String accountId, String userName, String phoneNumber) {
+        this.accountId = accountId;
+        this.userName = userName;
+        this.phoneNumber = phoneNumber;
+        this.balance = 0; // mặc định số dư = 0
     }
 
     @Override
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getColor() {
-        return color;
-    }
-}
-
-// ---------------------- Rectangle ----------------------
-class Rectangle implements Colorable {
-    private double length;
-    private double width;
-    private String color;
-
-    public Rectangle(double length, double width) {
-        this.length = length;
-        this.width = width;
+    public void deposit(double amount) {
+        if (amount <= 0) {
+            System.out.println("Số tiền nạp phải lớn hơn 0");
+            return;
+        }
+        balance += amount;
     }
 
     @Override
-    public void setColor(String color) {
-        this.color = color;
+    public void withdraw(double amount) {
+        if (amount <= 0) {
+            System.out.println("Số tiền rút phải lớn hơn 0");
+            return;
+        }
+        if (amount > balance) {
+            System.out.println("Không đủ số dư để rút");
+            return;
+        }
+        balance -= amount;
     }
 
-    public String getColor() {
-        return color;
-    }
-}
-
-// ---------------------- Square ----------------------
-class Square implements Colorable {
-    private double side;
-    private String color;
-
-    public Square(double side) {
-        this.side = side;
-    }
-
-    @Override
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getColor() {
-        return color;
+    public void displayBalance() {
+        System.out.println("Tài khoản: " + accountId + " | Chủ: " + userName + " | Số dư: " + balance);
     }
 }
 
 // ---------------------- Main ----------------------
 class Main {
     public static void main(String[] args) {
-        Circle circle = new Circle(5);
-        Rectangle rectangle = new Rectangle(4, 6);
-        Square square = new Square(3);
 
-        circle.setColor("Red");
-        rectangle.setColor("Blue");
-        square.setColor("Green");
+        // Khởi tạo hai tài khoản
+        BankAccount accountA = new BankAccount("A001", "Nguyễn Văn A", "0123456789");
+        BankAccount accountB = new BankAccount("B001", "Nguyễn Văn B", "0987654321");
 
-        System.out.println("Circle color: " + circle.getColor());
-        System.out.println("Rectangle color: " + rectangle.getColor());
-        System.out.println("Square color: " + square.getColor());
+        // Nạp tiền vào tài khoản A
+        accountA.deposit(1000);
+
+        // Thực hiện chuyển tiền
+        double transferAmount = 300;
+        accountA.withdraw(transferAmount);
+        accountB.deposit(transferAmount);
+
+        // Hiển thị số dư
+        accountA.displayBalance();
+        accountB.displayBalance();
     }
 }
